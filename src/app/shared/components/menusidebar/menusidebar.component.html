@@ -1,0 +1,59 @@
+<mat-accordion>
+  <mat-expansion-panel
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title> Gestionar Roles y Permisos </mat-panel-title>
+    </mat-expansion-panel-header>
+      <mat-list>
+        <div>
+          <!-- <button mat-button routerLink="reconocimiento/camara"> Retirar Estudiante </button> -->
+          <li>
+            <button mat-button routerLink="/gestion/roles"> Gestionar Roles </button>
+          </li>
+        </div>
+      </mat-list>
+  </mat-expansion-panel>
+  <mat-expansion-panel
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Gestionar Personal</mat-panel-title>
+  </mat-expansion-panel-header>
+    <mat-list>
+      <div>
+          <li>
+            <button mat-button routerLink="/gestion/pacientes"> Gestionar Pacientes </button>
+          </li>
+          <li>
+            <button mat-button routerLink="/gestion/medicos"> Gestionar Medicos </button>
+          </li>
+          <li>
+          </li>
+      </div>
+    </mat-list>
+</mat-expansion-panel>
+<mat-expansion-panel
+(opened)="panelOpenState = true"
+(closed)="panelOpenState = false"
+>
+<mat-expansion-panel-header>
+  <mat-panel-title> Gestionar Aspectos Medicos</mat-panel-title>
+</mat-expansion-panel-header>
+  <mat-list>
+    <div>
+        <li>
+          <button mat-button routerLink="/gestion/especialidades"> Gestionar Especialidades M. </button>
+        </li>
+        <li>
+          <button mat-button routerLink="/gestion/horarios"> Gestionar Horarios </button>
+        </li>
+        <li>
+          <button mat-button routerLink="/gestion/citas"> Gestionar Citas </button>
+        </li>
+    </div>
+  </mat-list>
+</mat-expansion-panel>
+</mat-accordion>

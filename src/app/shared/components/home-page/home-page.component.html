@@ -1,0 +1,105 @@
+<div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/" class="logo">Seguro de Salud vida sana</a></li>
+    </ul>
+    <ul class="nav-links">
+      <li><a href="#about">Sobre Nosotros</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#team">Equipo</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <div>
+      <a *ngIf="isAuthenticated" routerLink="/reserva" class="btn">Reservar Fichas</a>
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/gestion" class="btn" *ngIf="(rol !== null)">Panel Admin.</a>
+      </ng-container>
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/auth/login" class="btn">Iniciar Sesión</a>
+      </ng-container>
+    </div>
+    <div class="user-profile" >
+      <ng-container *ngIf="isAuthenticated">
+        <div class="caja">
+          <p class="circle text-center">{{ userNameInitial.nombre[0] }}</p>
+        </div>
+      </ng-container>
+      <ng-container>
+      <div class="dropdown">
+          <a routerLink="/reserva/fichas">Fichas</a>
+          <a routerLink="#" routerLinkActive="router-link-active"  (click)="logout()">Cerrar Sesión</a>
+        </div>
+      </ng-container>
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bienvenido a la Clínica San Santiago</h1>
+      <p>Tu salud es nuestra prioridad. Ofrecemos servicios médicos de alta calidad para cuidar de ti y tu familia.</p>
+      <a href="#services" class="btn">Nuestros Servicios</a>
+    </div>
+  </section>
+  <section id="about" class="about">
+    <div class="container">
+      <h2>Sobre Nosotros</h2>
+      <p>En Clínica San Santiago, nos dedicamos a ofrecer el mejor cuidado médico con un enfoque personalizado. Nuestro equipo de profesionales está comprometido con tu salud y bienestar.</p>
+    </div>
+  </section>
+  <section id="services" class="services">
+    <div class="container">
+      <h2>Servicios</h2>
+      <div class="service-item">
+        <h3>Medicina General</h3>
+        <p>Atención médica integral para todas las edades.</p>
+      </div>
+      <div class="service-item">
+        <h3>Odontología</h3>
+        <p>Cuidado dental completo para mantener tu sonrisa saludable.</p>
+      </div>
+      <div class="service-item">
+        <h3>Pediatría</h3>
+        <p>Cuidados especializados para los más pequeños.</p>
+      </div>
+    </div>
+  </section>
+  <section id="team" class="team">
+    <div class="container">
+      <h2>Equipo</h2>
+      <div class="team-member">
+        <img src="https://img.freepik.com/fotos-premium/doctora-usando-tableta-mientras-esta-pie-cerca-ventana-hospital-medico-feliz-trabajo-concepto-medicina-atencion-salud_665183-5643.jpg?w=360" alt="Dr. Juan Pérez">
+        <h3>Dr. Juan Pérez</h3>
+        <p>Médico General</p>
+      </div>
+      <div class="team-member">
+        <img src="https://img.freepik.com/fotos-premium/doctora-usando-tableta-mientras-esta-pie-cerca-ventana-hospital-medico-feliz-trabajo-concepto-medicina-atencion-salud_665183-5643.jpg?w=360" alt="Dra. María López">
+        <h3>Dra. María López</h3>
+        <p>Odontóloga</p>
+      </div>
+      <div class="team-member">
+        <img src="https://img.freepik.com/fotos-premium/doctora-usando-tableta-mientras-esta-pie-cerca-ventana-hospital-medico-feliz-trabajo-concepto-medicina-atencion-salud_665183-5643.jpg?w=360" alt="Dr. Carlos Martínez">
+        <h3>Dr. Carlos Martínez</h3>
+        <p>Pediatra</p>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Contacto</h2>
+      <div class="location">
+        <p>Ubicación: Av. Grigotá sobre, Doble vía La Guardia, La Guardia</p>
+        <p>Teléfono: 76320012</p>
+        <p> {{ "Email: contacto@clinicasalsantiago.com" }}</p>
+      </div>
+      <form>
+        <input type="text" placeholder="Nombre" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Mensaje" required></textarea>
+        <button type="submit" class="btn">Enviar</button>
+      </form>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2024 Clínica San Santiago. Todos los derechos reservados.</p>
+  </footer>
+
+</div>
