@@ -9,6 +9,10 @@ import { LayoutComponent } from '../shared/components/layout/layout.component';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { CitasMedicasPageComponent } from './pages/citas-medicas-page/citas-medicas-page.component';
 import { HistorialMedicoPageComponent } from './pages/historial-medico-page/historial-medico-page.component';
+import { EspecialidadesReporteComponent } from './pages/especialidades-reporte/especialidades-reporte.component';
+import { FichasReporteComponent } from './pages/fichas-reporte/fichas-reporte.component';
+import { MedicosReporteComponent } from './pages/medicos-reporte/medicos-reporte.component';
+import { SuspenderCitaComponent } from './pages/suspender-cita/suspender-cita.component';
 
 const routes: Routes = [
   {
@@ -46,6 +50,22 @@ const routes: Routes = [
       {
         path: 'fichas/:id',
         component: FichasComponent
+      },
+      {
+        path: 'reporte/especialidades',
+        component: EspecialidadesReporteComponent
+      },
+      {
+        path: 'reporte/fichas',
+        component: FichasReporteComponent
+      },
+      {
+        path: 'reporte/medicos',
+        component: MedicosReporteComponent
+      },
+      {
+        path: 'historial-medico/suspender/:id',
+        component: SuspenderCitaComponent
       },
       {
         path: '**',

@@ -16,6 +16,11 @@ import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { HistorialMedicoPageComponent } from './pages/historial-medico-page/historial-medico-page.component';
 import { CitasMedicasPageComponent } from './pages/citas-medicas-page/citas-medicas-page.component';
 import { EditortextComponent } from './components/editortext/editortext.component';
+import { EspecialidadesReporteComponent } from './pages/especialidades-reporte/especialidades-reporte.component';
+import { FichasReporteComponent } from './pages/fichas-reporte/fichas-reporte.component';
+import { MedicosReporteComponent } from './pages/medicos-reporte/medicos-reporte.component';
+import { SuspenderCitaComponent } from './pages/suspender-cita/suspender-cita.component';
+import { ReporteComponent } from './components/reporte/reporte.component';
 
 
 @NgModule({
@@ -31,7 +36,12 @@ import { EditortextComponent } from './components/editortext/editortext.componen
     PacientesComponent,
     HistorialMedicoPageComponent,
     CitasMedicasPageComponent,
-    EditortextComponent
+    EditortextComponent,
+    EspecialidadesReporteComponent,
+    FichasReporteComponent,
+    MedicosReporteComponent,
+    SuspenderCitaComponent,
+    ReporteComponent
   ],
   imports: [
     CommonModule,

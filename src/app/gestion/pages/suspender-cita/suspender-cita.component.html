@@ -1,0 +1,47 @@
+<mat-card-content>
+  <app-card-header [title]=nombre></app-card-header>
+  <div class="flex justify-content-between align-items-center">
+  </div>
+</mat-card-content>
+<mat-card-content class="w-6">
+  <form [formGroup]="custonFormFichas" (submit)="submitFormFichas()" class="w-9 mt-3">
+    <div>
+      <div>
+        <mat-form-field class="w-full">
+          <mat-label>Motivo</mat-label>
+          <input
+            matInput
+            type="text"
+            name="motivo"
+            formControlName="motivo"
+          />
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="w-full">
+        <mat-label>Fecha</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          name="fecha_proxima"
+          formControlName="fecha_proxima"
+        />
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="flex">
+      <button mat-raised-button color="primary" type="submit">
+        Actualizar
+      </button>
+      <div class="mx-2"></div>
+      <button mat-raised-button color="accent" type="button" (click)="volverAtras()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</mat-card-content>

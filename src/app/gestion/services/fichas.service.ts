@@ -25,12 +25,16 @@ export class FichasService {
     const url = `${this.APIURL}/fichas`
     return this.http.get<any[]>(url);
   }
+  public getFichasSuspendidas(): Observable<any[]> {
+    const url = `${this.APIURL}/fichas/suspendidos`
+    return this.http.get<any[]>(url);
+  }
   public getAllFichasById(id: any): Observable<any[]> {
     const url = `${this.APIURL}/fichas/fichas/${id}`
     return this.http.get<any[]>(url);
   }
 
-  public getFichasById(id: number): Observable<any> {
+  public getFichasById(id: any): Observable<any> {
     const url = `${this.APIURL}/fichas/${id}`;
     return this.http.get<any>(url);
   }
@@ -42,6 +46,10 @@ export class FichasService {
 
   public updateFichasById(id: number, data: any): Observable<any>  {
     const url = `${this.APIURL}/fichas/${id}`;
+    return this.http.put<any>(url, data);
+  }
+  public updateFichasToSuspendidoById(id: any, data: any): Observable<any>  {
+    const url = `${this.APIURL}/fichas/reprogramar/${id}`;
     return this.http.put<any>(url, data);
   }
 

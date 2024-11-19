@@ -1,0 +1,197 @@
+<mat-card-content>
+  <app-card-header title="Gestionar Medicos"></app-card-header>
+  <div class="flex justify-content-between align-items-center">
+    <div>
+      <button class="my-3 text-white" style="background-color: rgb(23, 176, 23);" mat-raised-button (click)="generateExcel()">
+        EXCEL
+      </button>
+      <button class="my-3 text-white" style="background-color: rgb(209, 80, 80);" mat-raised-button  (click)="generatePDF()">
+        PDF
+      </button>
+    </div>
+  </div>
+  <div class="mat-elevation-z2">
+    <table mat-table matSort [dataSource]="dataSource">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Id.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.nombre }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="apellido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.apellido }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="ci">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ci</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.ci }}</td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.telefono }}</td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Direccion</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.direccion }}</td>
+      </ng-container>
+      <ng-container matColumnDef="genero">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Genero</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.genero }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acción </th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <button mat-icon-button (click)="handleGoToEditPage(element.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="handleDeleteProduct(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+</mat-card-content>
+
+<ng-template #alertForm>
+  <app-alert title="Agregar Nuevo Medico">
+      <mat-card-content content>
+        <form [formGroup]="custonForm"
+        (submit)="submitForm()"
+        >
+          <div>
+            <mat-form-field class="w-full">
+              <mat-label> Nombre </mat-label>
+              <input matInput
+                type="text"
+                name="nombre"
+                formControlName="nombre"
+              />
+              <!-- <mat-error *ngIf="fieldValidator('name')"> nombre requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Apellido </mat-label>
+              <input matInput
+                type="text"
+                name="apellido"
+                formControlName="apellido"
+              />
+              <!-- <mat-error *ngIf="fieldValidator('name')"> simbolo requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Ci </mat-label>
+              <input matInput
+                type="text"
+                name="ci"
+                formControlName="ci"
+              />
+              <!-- <mat-error *ngIf="fieldValidator('name')"> simbolo requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Telefono </mat-label>
+              <input matInput
+                type="text"
+                name="telefono"
+                formControlName="telefono"
+              />
+              <!-- <mat-error *ngIf="fieldValidator('name')"> simbolo requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Dirección </mat-label>
+              <input matInput
+                type="text"
+                name="direccion"
+                formControlName="direccion"
+              />
+              <!-- <mat-error *ngIf="fieldValidator('name')"> simbolo requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Genero </mat-label>
+              <mat-select
+                type="number"
+                name="genero"
+                formControlName="genero"
+              >
+                <mat-option
+                  value="M"
+                >  Hombre
+                </mat-option>
+                <mat-option
+                  value="F"
+                >  Mujer
+                </mat-option>
+              </mat-select>
+              <!-- <mat-error *ngIf="fieldValidator('especialidad_id')"> categoria requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Correo </mat-label>
+              <input matInput
+                type="email"
+                name="email"
+                formControlName="email"
+              />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Contraseña </mat-label>
+              <input matInput
+                type="password"
+                name="password"
+                formControlName="password"
+              />
+              <!-- <mat-error *ngIf="fieldValidator('name')"> simbolo requerido </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="w-full">
+              <mat-label> Especialidad </mat-label>
+              <mat-select
+                type="text"
+                name="especialidad"
+                formControlName="especialidad"
+              >
+                <mat-option *ngFor="let espe of especialidades"
+                  [value]="espe.nombre"
+                > {{ espe.nombre }}
+                </mat-option>
+              </mat-select>
+              <!-- <mat-error *ngIf="fieldValidator('especialidad')"> categoria requerido </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="flex ">
+            <button mat-raised-button color="primary" type="submit">
+              Registrar
+            </button>
+            <div class="mx-2"></div>
+            <button mat-raised-button color="accent"
+              mat-dialog-close
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+  </app-alert>
+</ng-template>

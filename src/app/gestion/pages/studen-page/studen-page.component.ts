@@ -9,6 +9,7 @@ import { EspecialidadService } from '../../services/especialidad.service';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, of } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ReporteService } from '../../services/reporte.service';
 
 @Component({
   selector: 'app-studen-page',
@@ -32,7 +33,7 @@ export class StudenPageComponent implements OnInit {
   public especialidades: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private especialidadService: EspecialidadService, private toastr: ToastrService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private especialidadService: EspecialidadService, private toastr: ToastrService, private reporteService: ReporteService) {
     this.especialidadService.getEspecialidades()
     .pipe(
       catchError(error => {
@@ -152,5 +153,6 @@ export class StudenPageComponent implements OnInit {
       })
     }
   }
+
 
 }

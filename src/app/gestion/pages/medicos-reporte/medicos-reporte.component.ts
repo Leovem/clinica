@@ -11,20 +11,23 @@ import { catchError, of } from 'rxjs';
 import Swal from 'sweetalert2';
 import { MedicosService } from '../../services/medicos.service';
 import { UsersService } from '../../services/users.service';
-import { CitasService } from 'src/app/shared/services/citas.service';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { Router } from '@angular/router';
+
+//PDF
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 
 @Component({
-  selector: 'app-citas-medicas-page',
-  templateUrl: './citas-medicas-page.component.html',
-  styleUrls: ['./citas-medicas-page.component.css']
+  selector: 'app-medicos-reporte',
+  templateUrl: './medicos-reporte.component.html',
+  styleUrls: ['./medicos-reporte.component.css']
 })
-export class CitasMedicasPageComponent implements OnInit  {
-  public displayedColumns: string[] = ['id', 'fecha', 'nombre', 'hora_inicio', 'hora_fin', 'name', 'apellido', 'estado', 'accion'];
+export class MedicosReporteComponent implements OnInit  {
+  public displayedColumns: string[] = ['id', 'nombre', 'apellido', 'ci', 'telefono', 'direccion', 'genero', 'accion'];
   public dataSource: any;
-  public title: string = "Citas Medicas: ";
   @ViewChild(MatSort)
   public sort!: MatSort;
 
@@ -46,27 +49,26 @@ export class CitasMedicasPageComponent implements OnInit  {
     'tipo': ['Medico', Validators.required]
   });
 
-  public citas: any[] = [];
-  isAuthenticated = false;
-  userNameInitial: any = '';
+  public medicos: any[] = [];
+  public especialidades: any[] = [];
+
+  reportDataExcel: any[] = [];
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private medicosService: MedicosService,
     private toastr: ToastrService,
-    private authService: AuthService,
-    private citasService: CitasService,
-    private usersServices: UsersService,
-    private router: Router
+    private especialidadService: EspecialidadService,
+    private usersServices: UsersService
   ) {
-
+    this.getMedicos();
+    this.getEspecialidades();
   }
 
   ngOnInit(): void {
-    this.isAuthenticated = this.authService.isLoggedIn();
-    this.userNameInitial = this.authService.getUser();
-    this.title = this.title + " " + this.userNameInitial.nombre + " " + this.userNameInitial.apellido;
-    this.getCitasMedicos(this.userNameInitial.id);
+    this.getMedicos();
+    this.getEspecialidades();
   }
 
   public openDialog() {
@@ -135,10 +137,8 @@ export class CitasMedicasPageComponent implements OnInit  {
       }
   }
 
-
-  public getCitasMedicos(id: number) {
-
-    this.citasService.getAllByMedicoId(id)
+  public getEspecialidades() {
+    this.especialidadService.getEspecialidades()
     .pipe(
       catchError(error => {
         this.toastr.error('Error al cargar los datos');
@@ -147,16 +147,33 @@ export class CitasMedicasPageComponent implements OnInit  {
     )
     .subscribe((response: any[]) => {
       console.log(response)
-      this.citas = response;
-      this.dataSource = new MatTableDataSource<any>(this.citas);
+      this.especialidadService.setEspecialidades(response);
+      this.especialidades = this.especialidadService.especialidades;
+
+    });
+  }
+
+  public getMedicos() {
+    this.medicosService.getMedicos()
+    .pipe(
+      catchError(error => {
+        this.toastr.error('Error al cargar los datos');
+        return of([])
+      })
+    )
+    .subscribe((response: any[]) => {
+      console.log(response)
+      this.medicosService.setMedicos(response);
+      this.medicos = this.medicosService.medicos;
+      this.dataSource = new MatTableDataSource<any>(this.medicos);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
 
-  public handleGoToHistorialMedico(id: number, name: string, lastname: string) {
+
+  public handleGoToEditPage(id: number) {
     console.log(id);
-    this.router.navigate(['/gestion/historial-medico', id], { queryParams: { nombre: (name + " " + lastname )} });
   }
 
   public handleDeleteProduct(id: number) {
@@ -188,9 +205,38 @@ export class CitasMedicasPageComponent implements OnInit  {
     }
   }
 
-  public handleGoToSuspendCita(id: number, name: string, lastname: string) {
-    console.log(id);
-    this.router.navigate(['/gestion/historial-medico/suspender', id], { queryParams: { nombre: (name + " " + lastname )} });
+
+  generatePDF() {
+    const doc = new jsPDF();
+    doc.text('Reporte de Medicos', 10, 10);
+    autoTable(doc, {
+      head: [this.displayedColumns],
+      body: this.medicos.map((medico) => [medico.id, medico.user.nombre, medico.user.apellido, medico.user.ci, medico.user.telefono, medico.user.direccion, medico.user.genero]),
+      theme: 'grid',
+      headStyles: { fillColor: [22, 160, 133] }, // Color del encabezado
+      bodyStyles: { textColor: [50, 50, 50] },   // Color del texto
+      alternateRowStyles: { fillColor: [240, 240, 240] }, // Filas alternas
+      startY: 20, // Posición inicial en Y
+    });
+    doc.save('reporte.pdf');
+  }
+
+  generateExcel() {
+    const worksheet = XLSX.utils.json_to_sheet(this.medicos.map((medico) => [medico.id, medico.user.nombre, medico.user.apellido, medico.user.ci, medico.user.telefono, medico.user.direccion, medico.user.genero]));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte de Medicos');
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveExcelFile(excelBuffer, 'ReporteMedicos');
+  }
+
+  private saveExcelFile(buffer: any, fileName: string): void {
+    const blob = new Blob([buffer], {
+      type: 'application/octet-stream',
+    });
+    saveAs(blob, `${fileName}.xlsx`);
   }
 
 }

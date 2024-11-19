@@ -1,0 +1,80 @@
+/* Estilos generales */
+mat-expansion-panel {
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  mat-expansion-panel-header {
+    background-color: #00796b; /* Un verde suave y clínico */
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    padding: 10px 20px;
+  }
+  
+  mat-expansion-panel-header.mat-expanded {
+    background-color: #004d40; /* Color más oscuro cuando está expandido */
+  }
+  
+  mat-list {
+    padding: 0;
+    margin: 0;
+  }
+  
+  mat-list div {
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin-bottom: 5px;
+  }
+  
+  mat-list li {
+    list-style: none;
+  }
+  
+  button.mat-button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 20px;
+    border: none;
+    background-color: #ffffff;
+    color: #00796b;
+    font-size: 1rem;
+    text-transform: none;
+    border-radius: 8px;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+  }
+  
+  button.mat-button:hover {
+    background-color: #00796b;
+    color: white;
+  }
+  
+  button.mat-button:focus {
+    outline: none;
+    background-color: #004d40;
+    color: white;
+  }
+  
+  mat-panel-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  /* Estilo de los paneles cuando están cerrados */
+  mat-expansion-panel-body {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  /* Animación de apertura de los paneles */
+  mat-expansion-panel-header .mat-expansion-indicator {
+    color: white;
+  }
+  

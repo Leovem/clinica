@@ -1,0 +1,72 @@
+<mat-card-content>
+  <app-card-header title="Reporte de Fichas"></app-card-header>
+  <div class="flex justify-content-between align-items-center">
+    <div>
+      <button class="my-3 text-white" style="background-color: rgb(23, 176, 23);" mat-raised-button (click)="generateExcel()">
+        EXCEL
+      </button>
+      <button class="my-3 text-white" style="background-color: rgb(209, 80, 80);" mat-raised-button  (click)="generatePDF()">
+        PDF
+      </button>
+    </div>
+  </div>
+  <div class="mat-elevation-z2">
+    <table mat-table matSort [dataSource]="dataSource">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Id.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+        <td mat-cell *matCellDef="let element">{{ element.fecha | date }} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="especialidad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Especialidad</th>
+        <td mat-cell *matCellDef="let element">{{ element.horarioEspecialidad.medico.especialidad }}</td>
+      </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+        <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
+      </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="cantidad_vendida">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Vendidad</th>
+        <td mat-cell *matCellDef="let element">{{ element.cantidadVendidad }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="dia">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Dia</th>
+        <td mat-cell *matCellDef="let element">{{ element.horarioEspecialidad.horario.dia.nombre }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora</th>
+        <td mat-cell *matCellDef="let element">{{ element.horarioEspecialidad.horario.hora_inicio }} - {{ element.horarioEspecialidad.horario.hora_fin }}</td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="medico">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Medico</th>
+        <td mat-cell *matCellDef="let element">{{ element.horarioEspecialidad.medico.user.nombre }} - {{ element.horarioEspecialidad.medico.user.apellido }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+</mat-card-content>
+

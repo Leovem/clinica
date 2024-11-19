@@ -47,6 +47,11 @@
             <strong>Hora Inicio:</strong> {{ ficha.ficha.horarioEspecialidad.horario.hora_inicio }} <br />
             <strong>Hora Fin:</strong> {{ ficha.ficha.horarioEspecialidad.horario.hora_fin }} <br />
             <strong>Especialidad:</strong> {{ ficha.ficha.horarioEspecialidad.especialidad.nombre }} <br />
+            <hr class="hr">
+            <ng-template ngIf="ficha.ficha.estado">
+              <strong>Estado:</strong> {{ ficha.ficha.estado===true? "Pospuesto" : "Pendiente" }} <br />
+              <strong>Proxima Fecha:</strong> {{ ficha.ficha.fecha_proxima | date }} <br />
+            </ng-template>
             <hr class="hr" />
           </div>
         </div>
@@ -55,6 +60,6 @@
   </section>
 
   <footer>
-    <!-- <p>&copy; 2024 Clínica San Santiago. Todos los derechos reservados.</p> -->
+    
   </footer>
 </div>
